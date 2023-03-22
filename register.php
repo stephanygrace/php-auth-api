@@ -30,12 +30,14 @@ elseif (
     !isset($data->name)
     || !isset($data->email)
     || !isset($data->password)
+    || !isset($data->confirmpassword)
     || empty(trim($data->name))
     || empty(trim($data->email))
     || empty(trim($data->password))
+    || empty(trim($data->confirmpassword))
 ) :
 
-    $fields = ['fields' => ['name', 'email', 'password']];
+    $fields = ['fields' => ['name', 'email', 'password', 'confirmpassword']];
     $returnData = msg(0, 422, 'Please Fill in all Required Fields!', $fields);
 
 // IF THERE ARE NO EMPTY FIELDS THEN-
@@ -44,6 +46,9 @@ else :
     $name = trim($data->name);
     $email = trim($data->email);
     $password = trim($data->password);
+    $confirmpassword = trim($data->confirmpassword);
+
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) :
         $returnData = msg(0, 422, 'Invalid Email Address!');
 
@@ -53,6 +58,9 @@ else :
     elseif (strlen($name) < 3) :
         $returnData = msg(0, 422, 'Your name must be at least 3 characters long!');
 
+    elseif ($password != $confirmpassword) :
+        $returnData = msg(0, 422, 'Your passwords do not match!');
+        
     else :
         try {
 
