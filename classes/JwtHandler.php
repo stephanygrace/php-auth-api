@@ -18,7 +18,7 @@ class JwtHandler
      
         date_default_timezone_set('Asia/Kolkata');
         $this->issuedAt = time();
-
+        
         // Token Validity (3600 second = 1hr)
         $this->expire = $this->issuedAt + 3600;
 
